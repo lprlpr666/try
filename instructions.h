@@ -777,8 +777,9 @@ void processing(string &s, user &usership, ticket_base &ticketbase, traindatabas
             Time now(date, {firsttrian.hour_, firsttrian.minute_});
             Time arrve;
             if (((*iterto).pos + 1) != tmptr.stationNUm) {
-                arrve = now + totaltime - tmptr.stopoverTimes[(*iterto).pos - 1];
                 totaltime = totaltime - tmptr.stopoverTimes[(*iterto).pos - 1];
+                arrve = now + totaltime;
+
             } else {
                 arrve = now + totaltime;
             }
@@ -1075,13 +1076,13 @@ void processing(string &s, user &usership, ticket_base &ticketbase, traindatabas
                         time1 = tmptrs.sumtime[(*iter1).pos - 1];
                         monu1 = tmptrs.sumprices[(*iter1).pos - 1];
                     }
-                    midtimejudge = midtimejudge + time1;
-                    midtimejudge.month_=mid_time.month_;
-                    midtimejudge.day_=mid_time.day_;
-                    if (midtimejudge < mid_time)midtimejudge = midtimejudge + 24 * 60;//加上一天
+                    Time midtmp(midtimejudge);
+                    midtmp=midtmp+time1;
+                    midtmp.month_=mid_time.month_;
+                    midtmp.day_=mid_time.day_;
+                    if ( midtmp < mid_time)midtimejudge = midtimejudge + 24 * 60;//加上一天
                     Time starttrrr(tmptrs.saledatamonth1, tmptrs.starttime),
                             lasttrrr(tmptrs.saledatamonth2, tmptrs.starttime);
-                    midtimejudge = midtimejudge - time1;
                     if (midtimejudge > lasttrrr) {
                         ++iter1;
                         iter2++;
