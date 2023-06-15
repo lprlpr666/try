@@ -29,16 +29,16 @@ void start(){
     bpt_seaat.setfile("seat.db");
     station_to_trainid.setfile("station_to_train.db");
     bpt_history_order.setfile("history.db");
-        std::string inlinestring;
-        while(getline(std::cin, inlinestring)) {
-            strp++;
-            processing(inlinestring,usership,ticketbase,bpt_train);
-            if(ifout) {
-                ifout = 0;
-                cout << "bye" << endl;
-                return;
-            }
+    std::string inlinestring;
+    while(getline(std::cin, inlinestring)) {
+        strp++;
+        processing(inlinestring,usership,ticketbase,bpt_train);
+        if(ifout) {
+            ifout = 0;
+            cout << "bye" << endl;
+            return;
         }
+    }
 };
 class pq{
 public:
@@ -779,7 +779,7 @@ void processing(string &s, user &usership, ticket_base &ticketbase, traindatabas
             if (((*iterto).pos + 1) != tmptr.stationNUm) {
                 totaltime = totaltime - tmptr.stopoverTimes[(*iterto).pos - 1];
                 arrve = now + totaltime;
-
+                
             } else {
                 arrve = now + totaltime;
             }
@@ -1076,13 +1076,13 @@ void processing(string &s, user &usership, ticket_base &ticketbase, traindatabas
                         time1 = tmptrs.sumtime[(*iter1).pos - 1];
                         monu1 = tmptrs.sumprices[(*iter1).pos - 1];
                     }
-                    Time midtmp(midtimejudge);
-                    midtmp=midtmp+time1;
-                    midtmp.month_=mid_time.month_;
-                    midtmp.day_=mid_time.day_;
-                    if ( midtmp < mid_time)midtimejudge = midtimejudge + 24 * 60;//加上一天
+                    midtimejudge = midtimejudge + time1;
+                    midtimejudge.month_=mid_time.month_;
+                    midtimejudge.day_=mid_time.day_;
+                    if (midtimejudge < mid_time)midtimejudge = midtimejudge + 24 * 60;//加上一天
                     Time starttrrr(tmptrs.saledatamonth1, tmptrs.starttime),
                             lasttrrr(tmptrs.saledatamonth2, tmptrs.starttime);
+                    midtimejudge = midtimejudge - time1;
                     if (midtimejudge > lasttrrr) {
                         ++iter1;
                         iter2++;
@@ -1189,9 +1189,9 @@ void processing(string &s, user &usership, ticket_base &ticketbase, traindatabas
                     seatsss = std::min(seatsss, left_temp_.everydayticket[k]);
                 }
                 as1 = std::string(position1[i].ID) + " " + std::string(from) + " " + hisleavetime.couting() + " -> " +
-                     std::string(tmptr.stations[j]) + " " + mid_time.couting() + " " + std::to_string(cost_first) +
-                     " " + std::to_string(seatsss);
-               as2 = ans;
+                      std::string(tmptr.stations[j]) + " " + mid_time.couting() + " " + std::to_string(cost_first) +
+                      " " + std::to_string(seatsss);
+                as2 = ans;
                 time_summ = time_sums;
                 cost_summ = cost_sums;
             }
